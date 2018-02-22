@@ -1,39 +1,51 @@
-import { Lesson } from './../shared/model/lesson';
-import { Component, OnInit } from '@angular/core';
-import {
-  globalEventBus,
-  LESSONS_LIST_AVAILABLE,
-  ADD_NEW_LESSON
-} from './event-bus';
-import { testLessons } from '../shared/model/test-lessons';
+import {Component, OnInit} from '@angular/core';
+import {testLessons} from '../shared/model/test-lessons';
+import {Lesson} from '../shared/model/lesson';
+import { store } from './app-data';
 
 @Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'event-bus-experiments',
-  templateUrl: './event-bus-experiments.component.html',
-  styleUrls: ['./event-bus-experiments.component.css']
+    selector: 'event-bus-experiments',
+    templateUrl: './event-bus-experiments.component.html',
+    styleUrls: ['./event-bus-experiments.component.css']
 })
 export class EventBusExperimentsComponent implements OnInit {
-  lessons: Lesson[] = [];
 
-  ngOnInit() {
-    console.log('Top level component broadcasted all lessons ...');
+    private lessons: Lesson[] = [];
 
-    this.lessons = [...testLessons];
+    ngOnInit() {
 
-    globalEventBus.notifyObservers(LESSONS_LIST_AVAILABLE, this.lessons);
+        console.log('Top level component broadcasted all lessons ...');
 
-    setTimeout(() => {
-      this.lessons.push({
+        store.initializeLessonsList(testLessons.slice(0));
+
+        setTimeout(() => {
+            const newLesson = {
+              id: Math.random(),
+              description: 'New lesson arriving from the backend'
+            }
+            store.addLesson(newLesson);
+        }, 10000);
+
+    }
+
+    addLesson(lessonText: string) {
+      const newLesson = {
         id: Math.random(),
-        description: 'New lesson arriving from the backend'
-      });
+        description: lessonText
+      }
+      store.addLesson(newLesson);
+    }
 
-     globalEventBus.notifyObservers(LESSONS_LIST_AVAILABLE, this.lessons);
-    }, 10000);
-  }
-
-  addLesson(lessonText: string) {
-    globalEventBus.notifyObservers(ADD_NEW_LESSON, lessonText);
-  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
