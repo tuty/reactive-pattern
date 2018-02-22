@@ -1,25 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import {Lesson} from '../shared/model/lesson';
-import { Observer, store } from '../event-bus-experiments/app-data';
+import { Lesson } from '../shared/model/lesson';
+import { store } from '../event-bus-experiments/app-data';
+import { Observer } from 'rxjs/Rx';
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'lessons-counter',
   templateUrl: './lessons-counter.component.html',
   styleUrls: ['./lessons-counter.component.css']
 })
-export class LessonsCounterComponent implements Observer {
+export class LessonsCounterComponent implements Observer<Lesson[]>, OnInit {
+  lessonsCounter = 0;
 
-    lessonsCounter = 0;
+  ngOnInit() {
+    store.lessonsList$.subscribe(this);
+  }
 
-    constructor() {
-        console.log('lesson list component is registered as observer ..');
+  next(data: Lesson[]) {
+    this.lessonsCounter = data.length;
+  }
 
-        store.subscribe(this);
-    }
+  error(err) {
+    console.log(err);
+  }
 
-    next(data: Lesson[]) {
-        console.log('counter component received data ..');
-        this.lessonsCounter = data.length;
-    }
-
+  complete() {
+    console.log('complete');
+  }
 }
