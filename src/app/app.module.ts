@@ -1,22 +1,28 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { BrowserEventExperimentComponent } from './browser-event-experiment/browser-event-experiment.component';
+import { BrowserEventExperimentsComponent } from './browser-event-experiments/browser-event-experiments.component';
 import { EventBusExperimentsComponent } from './event-bus-experiments/event-bus-experiments.component';
-import { LessonListComponent } from './lesson-list/lesson-list.component';
+import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { LessonsCounterComponent } from './lessons-counter/lessons-counter.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    BrowserEventExperimentComponent,
+    BrowserEventExperimentsComponent,
+    BrowserEventExperimentsComponent,
+    BrowserEventExperimentsComponent,
     EventBusExperimentsComponent,
-    LessonListComponent,
+    LessonsListComponent,
     LessonsCounterComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
