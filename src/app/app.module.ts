@@ -10,11 +10,13 @@ import { LessonsCounterComponent } from './lessons-counter/lessons-counter.compo
 import { HomeComponent } from './home/home.component';
 import {firebaseConfig} from "../environments/firebase.config";
 import {AngularFireModule} from 'angularfire2';
-import {AngularFireDatabaseModule} from 'angularfire2/database';
 import {RouterModule} from '@angular/router';
 import {routerConfig} from "./router.config";
 import { CourseDetailComponent } from './course-detail/course-detail.component';
-import { CoursesService } from './services/courses.service';
+import {CoursesService} from "./services/courses.service";
+import {AngularFireDatabaseModule} from "angularfire2/database";
+import {AngularFireAuthModule} from "angularfire2/auth";
+import { CoursesListComponent } from './courses-list/courses-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { CoursesService } from './services/courses.service';
     LessonsListComponent,
     LessonsCounterComponent,
     HomeComponent,
-    CourseDetailComponent
+    CourseDetailComponent,
+    CoursesListComponent
   ],
   imports: [
     BrowserModule,
@@ -32,11 +35,18 @@ import { CoursesService } from './services/courses.service';
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     RouterModule.forRoot(routerConfig),
   ],
   providers: [
-    CoursesService
+      CoursesService
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
+
